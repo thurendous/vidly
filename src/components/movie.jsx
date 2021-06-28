@@ -49,19 +49,12 @@ class Movies extends Component {
 
     handlePageChange = (page) => {
         // console.log(page);
-
         this.setState({ currentPage: page });
     }
 
-    handleSort = path => {
+    handleSort = sortColumn => {
         // console.log(path);
-        const sortColumn = {...this.state.sortColumn};
-        if (sortColumn.path === path) 
-        sortColumn.order = (sortColumn.order === "asc") ? "desc" : "asc";
-        else {
-            sortColumn.path = path;
-            sortColumn.order = "asc";
-        }
+
         this.setState({ sortColumn })
     };
 
@@ -74,7 +67,7 @@ class Movies extends Component {
         const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
         
         if (cnt === 0) 
-        return ( // 如果这里的return被叫了，那么这里的
+        return ( // 如果这里的return被call了，那么这里的
             <div>
             <p> There is nothing in the list right now ! </p>
             <button onClick={this.restart} className="btn btn-primary btn-sm">restart</button>
@@ -96,7 +89,7 @@ class Movies extends Component {
                 </div>
                 <div className="col">
                 <p className="mt-2">showing {filtered.length} movies in the database now. </p>
-            <MoviesTable movies={movies} onLike={this.handleLike} onDelete={this.handleDelete} onSort={this.handleSort}/>
+            <MoviesTable movies={movies} onLike={this.handleLike} sortColumn={sortColumn} onDelete={this.handleDelete} onSort={this.handleSort}/>
             <Pagination 
             // itemsCount={count} 
             pageSize={pageSize} 
